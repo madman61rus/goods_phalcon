@@ -11,12 +11,55 @@ class GoodsController extends \Phalcon\Mvc\Controller
 
     public function editAction($id)
     {
-        echo $id;
+
+        $good = Goods::findFirst($id);
+
+        if($this->request->isPost())
+        {
+
+            $good->title = $this->request->getPost("title",['striptags','trim']);
+            $good->price = $this->request->getPost("price", 'float');
+            $good->quantity = $this->request->getPost("quantity", 'int');
+            $good->categoryId = $this->request->getPost("categoryid", 'int');
+
+            if ($good->save() === true)
+            {
+                return $this->dispatcher->forward(
+                    [
+                        "controller" => "goods",
+                        "action"     => "index",
+                    ]);
+            } else {
+                $good->appendMessage(new \Phalcon\Mvc\Model\Message("Не получилось отредактировать товар "));
+
+            }
+
+        }
+
+        $messages = $good->getMessages();
+        $this->view->messages = $messages;
+
+        $this->view->categories = Categories::find();
+        $this->view->good = $good;
+
     }
 
     public function deleteAction($id)
     {
-        echo $id;
+            if($this->request->isPost())
+        {
+
+            if($this->db->delete('goods', "id={$id}")){
+                return $this->dispatcher->forward(
+                    [
+                        "controller" => "goods",
+                        "action"     => "index",
+                    ]);
+            } else {
+
+                $this->view->messages = "Товар не удален ";
+            }
+        }
     }
 
     public function createAction()
@@ -37,7 +80,7 @@ class GoodsController extends \Phalcon\Mvc\Controller
 
             }else{
 
-                $this->dispatcher->forward(
+                return $this->dispatcher->forward(
                     [
                         "controller" => "goods",
                         "action"     => "index",
