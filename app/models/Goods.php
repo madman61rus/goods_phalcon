@@ -125,6 +125,22 @@ class Goods extends \Phalcon\Mvc\Model
         return count($messages) == 0;
     }
 
+    public function beforeSave()
+    {
+        if ($this->price <= 0) {
+            $this->appendMessage(new Model\Message('Цена не может быть отрицательной или равной нулю'));
+            return false;
+        }
+
+        if ($this->quantity < 0) {
+            $this->appendMessage(new Model\Message('Остаток не может быть отрицательным'));
+            return false;
+        }
+
+
+        return true;
+    }
+
 
 
 }

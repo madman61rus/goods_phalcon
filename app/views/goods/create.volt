@@ -39,6 +39,6 @@
         </div>
     </div>
 
-    {{ submit_button('Добавить') }}
+    {{ submit_button('Добавить','class':'btn btn-default pull-right') }}
 
 </form>

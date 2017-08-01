@@ -1,12 +1,22 @@
-<h3>Редактирование товара</h3>
+<div class="container" >
+    <div class="row clearfix">
 
+        <h2>Редактирование товара</h2>
+    </div>
 
-{% for message in messages if messages %}
+    <div class="row">
+
+    {% for message in messages if messages %}
     <p>{{ message.getMessage() }}</p>
 {% endfor %}
 
+    </div>
+
+
+<div class="row ">
 
 <form class="form-horizontal" role="form" action="{{ id }}" method="POST">
+
     <div class="form-group">
         <label class="col-lg-3 control-label">Название:</label>
         <div class="col-lg-8">
@@ -39,6 +49,10 @@
         </div>
     </div>
 
-    {{ submit_button('Изменить','class':'btn btn-default pull-right') }}
 
 </form>
+</div>
+    {{ submit_button('Изменить','class':'btn btn-default pull-right') }}
+
+
+</div>
