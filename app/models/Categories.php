@@ -1,5 +1,7 @@
 <?php
 
+use \Phalcon\Mvc\Model;
+
 class Categories extends \Phalcon\Mvc\Model
 {
 
@@ -59,6 +61,32 @@ class Categories extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+
+    public function beforeCreate() {
+
+        $validation = new \Phalcon\Validation();
+
+        $validation->add(
+            'title',
+            new \Phalcon\Validation\Validator\PresenceOf(
+                [
+                    'message' => 'Поле наименование должно быть заполнено',
+                ]
+            )
+        );
+
+
+        $messages = $validation->validate($_POST);
+
+
+        foreach ($messages as $message)
+        {
+
+            $this->appendMessage(new Model\Message($message->getMessage()));
+        }
+
+        return count($messages) == 0;
     }
 
 }

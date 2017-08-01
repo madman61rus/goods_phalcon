@@ -23,4 +23,6 @@
         </tbody>
     </table>
 
+    {{ link_to('category/create/', 'Добавить','class':'btn btn-default pull-right')}}
+
 </div>

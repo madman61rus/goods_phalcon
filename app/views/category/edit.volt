@@ -1,7 +1,20 @@
-<h1>Редактирование категории</h1>
+<h2>Редактирование категории</h2>
 
-<form action="edit">
-    <label for="title">Название : </label>
-    <input id="title" value="{{ category.title }}">
-    <button>Ok</button>
+
+{% for message in messages if messages %}
+    <p>{{ message.getMessage() }}</p>
+{% endfor %}
+
+
+<form class="form-horizontal" role="form" action="{{ id }}" method="POST">
+    <div class="form-group">
+        <label class="col-lg-3 control-label">Название:</label>
+        <div class="col-lg-8">
+            <input name="title" class="form-control" type="text" value="{{ category.title }}">
+        </div>
+    </div>
+
+
+    {{ submit_button('Изменить','class':'btn btn-default pull-right') }}
+
 </form>
